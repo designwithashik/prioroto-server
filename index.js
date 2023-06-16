@@ -39,6 +39,16 @@ async function run() {
         const database = client.db('prioroto');
         const tasksCollection = database.collection('tasks');
         const usersCollection = database.collection('users');
+
+        app.get('/tasks', async (req, res) => {
+            const result = await tasksCollection.find().toArray()
+            res.send(result);
+          })
+        app.post('/tasks', async (req, res) => {
+            const task = req.body;
+            const result = await tasksCollection.insertOne(task);
+            res.send(result);
+          })
         
 
         // Send a ping to confirm a successful connection
